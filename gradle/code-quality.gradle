@@ -45,23 +45,45 @@ tasks.withType(FindBugs) {
     }
 }
 
+task downloadCheckstyleXLSFile() << {
+    def address='https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/codeQuality/checkstyle.xsl'
+    def target='${buildDir}/checkstyle.xls'
+
+  new File("${address.tokenize('/')[-1]}").withOutputStream { out ->
+      new URL(address).withInputStream { from ->  out << from; }
+  }
+}
+
+build.dependsOn downloadCheckstyleXLSFile
+
 task checkstyleHtml {
     group = "Verification"
     description = "Creates a human readable Checkstyle report"
     doLast {
         ant.xslt(in: checkstyleMain.reports.xml.destination,
-                style: file('https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/codeQuality/checkstyle.xsl'),
+                style: file('${buildDir}/checkstyle.xsl'),
                 out: new File(checkstyleMain.reports.xml.destination.parent, 'main.html'))
     }
 }
 checkstyleMain.finalizedBy checkstyleHtml
+
+task downloadFindbugsFile() << {
+    def address='https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/codeQuality/findbugs.xsl'
+    def target='${buildDir}/findbugs.xls'
+
+  new File("${address.tokenize('/')[-1]}").withOutputStream { out ->
+      new URL(address).withInputStream { from ->  out << from; }
+  }
+}
+
+build.dependsOn downloadFindbugsFile
 
 task findbugsHtml {
     group = "Verification"
     description = "Creates a human readable Findbugs report"
     doLast {
         ant.xslt(in: file("$buildDir/reports/findbugs/main.xml"),
-                style: file('https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/codeQuality/findbugs.xsl'),
+                style: file('$buildDir/findbugs.xsl'),
                 out: new File("$buildDir/reports/findbugs/main.html"))
     }
 }
