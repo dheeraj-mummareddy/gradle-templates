@@ -16,7 +16,7 @@ task downloadCheckstyleXMLFile() << {
   }
 }
 
-checkstyle.dependsOn(downloadCheckstyleXMLFile)
+build.dependsOn downloadCheckstyleXMLFile
 
 checkstyle {
     ignoreFailures = true
