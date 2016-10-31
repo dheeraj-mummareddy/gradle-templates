@@ -1,0 +1,1 @@
+apply from: 'https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/gradle/codeQuality.gradle'
