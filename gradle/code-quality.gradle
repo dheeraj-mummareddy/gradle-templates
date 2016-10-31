@@ -7,9 +7,20 @@ check {
     dependsOn("jacocoTestReport")
 }
 
+task downloadCheckstyleXMLFile() << {
+    def address='https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/codeQuality/checkstyle.xml'
+    def target='${buildDir}/checkstyle.xml'
+
+  new File("${address.tokenize('/')[-1]}").withOutputStream { out ->
+      new URL(address).withInputStream { from ->  out << from; }
+  }
+}
+
+checkstyle.dependsOn downloadCheckstyleXMLFile
+
 checkstyle {
     ignoreFailures = true
-    configFile = file('https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/codeQuality/checkstyle.xml')
+    configFile = file('${buildDir}/checkstyle.xml')
     sourceSets = [ project.sourceSets.main ]
 }
 
