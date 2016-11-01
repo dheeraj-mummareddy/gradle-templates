@@ -1,22 +1,38 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'de.undercouch:gradle-download-task:1.0'
+    }
+}
+
+import de.undercouch.gradle.tasks.download.Download
+
+
+
 apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 apply plugin: 'pmd'
 apply plugin: 'jacoco'
+apply plugin: 'download-task'
 
 check {
     dependsOn("jacocoTestReport")
 }
 
-task downloadCheckstyleXMLFile() << {
-    def address='https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/codeQuality/checkstyle.xml'
-    def target='${buildDir}/checkstyle.xml'
-
-  new File("${address.tokenize('/')[-1]}").withOutputStream { out ->
-      new URL(address).withInputStream { from ->  out << from; }
-  }
+task downloadFiles() << {
+    download {
+	src([
+		'https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/codeQuality/checkstyle.xml'
+		'https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/codeQuality/checkstyle.xsl'
+		'https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/codeQuality/findbugs.xsl'
+	])
+    dest buildDir
+    }
 }
 
-build.dependsOn downloadCheckstyleXMLFile
+build.dependsOn downloadFiles
 
 checkstyle {
     ignoreFailures = true
@@ -45,17 +61,6 @@ tasks.withType(FindBugs) {
     }
 }
 
-task downloadCheckstyleXLSFile() << {
-    def address='https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/codeQuality/checkstyle.xsl'
-    def target='${buildDir}/checkstyle.xls'
-
-  new File("${address.tokenize('/')[-1]}").withOutputStream { out ->
-      new URL(address).withInputStream { from ->  out << from; }
-  }
-}
-
-build.dependsOn downloadCheckstyleXLSFile
-
 task checkstyleHtml {
     group = "Verification"
     description = "Creates a human readable Checkstyle report"
@@ -66,17 +71,6 @@ task checkstyleHtml {
     }
 }
 checkstyleMain.finalizedBy checkstyleHtml
-
-task downloadFindbugsFile() << {
-    def address='https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/codeQuality/findbugs.xsl'
-    def target='${buildDir}/findbugs.xls'
-
-  new File("${address.tokenize('/')[-1]}").withOutputStream { out ->
-      new URL(address).withInputStream { from ->  out << from; }
-  }
-}
-
-build.dependsOn downloadFindbugsFile
 
 task findbugsHtml {
     group = "Verification"
