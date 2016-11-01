@@ -21,7 +21,7 @@ check {
     dependsOn("jacocoTestReport")
 }
 
-task downloadFiles() << {
+task downloadFiles << {
     download {
 	src([
 		'https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/codeQuality/checkstyle.xml',
