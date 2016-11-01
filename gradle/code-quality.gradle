@@ -24,8 +24,8 @@ check {
 task downloadFiles() << {
     download {
 	src([
-		'https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/codeQuality/checkstyle.xml'
-		'https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/codeQuality/checkstyle.xsl'
+		'https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/codeQuality/checkstyle.xml',
+		'https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/codeQuality/checkstyle.xsl',
 		'https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/codeQuality/findbugs.xsl'
 	])
     dest buildDir
