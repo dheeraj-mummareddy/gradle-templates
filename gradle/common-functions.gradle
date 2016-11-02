@@ -19,7 +19,20 @@ def getBranch() {
     return branchName
 }
 
-ext{
+def determineVersion() {
+    def versionNumber = "$version"
+    def isSnapshot = true
+    if (project.hasProperty('releaseType') && project.releaseType == "release") {
+        isSnapshot = false
+    }
+    def finalVersionNumber = isSnapshot ? "$versionNumber-SNAPSHOT" : "$versionNumber-RELEASE"
+    System.setProperty("calculatedVersion", finalVersionNumber)
+    logger.lifecycle("Calculated version: " + finalVersionNumber)
+    return finalVersionNumber
+}
+
+ext {
+    determineVersion = this.&determineVersion
     getRevision = this.&getRevision    
     getBranch = this.&getBranch
 }
