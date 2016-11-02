@@ -8,13 +8,13 @@ check {
 }
 
 checkstyle {
-    ignoreFailures = true
+    ignoreFailures = false
     configFile = file('codeQuality/checkstyle.xml')
     sourceSets = [ project.sourceSets.main ]
 }
 
 findbugs {
-    ignoreFailures = true
+    ignoreFailures = false
     sourceSets = [ project.sourceSets.main ]
 }
 
