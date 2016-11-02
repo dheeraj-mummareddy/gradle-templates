@@ -18,5 +18,4 @@ idea {
 test {
     jvmArgs '-noverify'
     useJUnit {}
-    finalizedBy jacocoTestReport
 }
