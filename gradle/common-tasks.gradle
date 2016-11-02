@@ -1,0 +1,5 @@
+task printClasspath {
+    doLast {
+        sourceSets.main.compileClasspath.each { println it }
+    }
+}

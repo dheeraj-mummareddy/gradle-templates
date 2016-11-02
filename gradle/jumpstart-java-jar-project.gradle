@@ -1,0 +1,33 @@
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'project-report'
+
+apply from: 'https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/gradle/common-tasks.gradle'
+apply from: 'https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/gradle/common-functions.gradle'
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+	jcenter()
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': project.name,
+                'Implementation-Version': project.version,
+                'Built-By': System.getProperty('user.name'),
+                'Built-Date': new Date().format("EEE MMM dd HH:mm:ss zzz yyyy "),
+                'Built-JDK': System.getProperty('java.version'),
+                'Created-By': 'Gradle',
+                'Git-Commit': getRevision(),
+                'Git-Branch': getBranch(),
+                'Source-Compatibility': sourceCompatibility,
+                'Target-Compatibility': targetCompatibility
+    }
+}
+
+apply from: 'https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/gradle/code-quality.gradle'

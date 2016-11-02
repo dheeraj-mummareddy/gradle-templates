@@ -1,0 +1,25 @@
+def getRevision() {
+
+    def revisionName = System.properties['revisionName']
+    if(revisionName == null) {
+        def revisionCmd = "git rev-parse HEAD"
+        def revisionRes = revisionCmd.execute()
+        revisionName = revisionRes.text.trim()
+    }
+    return revisionName
+}
+
+def getBranch() {
+    def branchName = System.properties['branchName']
+    if(branchName == null) {
+        def branchCmd = "git rev-parse --abbrev-ref HEAD"
+        def branchRes = branchCmd.execute()
+        branchName = branchRes.text.trim()
+    }
+    return branchName
+}
+
+ext{
+    determineEnvironment = this.&determineEnvironment
+    getBranch = this.&getBranch
+}
