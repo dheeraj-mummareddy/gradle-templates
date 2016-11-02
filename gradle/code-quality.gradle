@@ -1,7 +1,19 @@
+buildscript {
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.2"
+  }
+}
+
 apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 apply plugin: 'pmd'
 apply plugin: 'jacoco'
+apply plugin: 'org.sonarqube'
 
 check {
     dependsOn("jacocoTestReport")
@@ -27,6 +39,15 @@ pmd {
 jacoco {
     reportsDir = file("$buildDir/reports/jacoco")
 }
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
+
+check.dependsOn jacocoTestReport
 
 test {
     finalizedBy jacocoTestReport
