@@ -28,6 +28,10 @@ jacoco {
     reportsDir = file("$buildDir/reports/jacoco")
 }
 
+test {
+    finalizedBy jacocoTestReport
+}
+
 tasks.withType(FindBugs) {
     reports {
         xml.withMessages = true
