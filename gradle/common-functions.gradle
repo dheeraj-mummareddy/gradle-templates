@@ -20,6 +20,6 @@ def getBranch() {
 }
 
 ext{
-    determineEnvironment = this.&determineEnvironment
+    getRevision = this.&getRevision    
     getBranch = this.&getBranch
 }
