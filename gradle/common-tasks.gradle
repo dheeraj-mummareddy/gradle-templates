@@ -3,3 +3,16 @@ task printClasspath {
         sourceSets.main.compileClasspath.each { println it }
     }
 }
+
+compileGroovy {
+    groovyOptions.forkOptions.jvmArgs = ['-noverify']
+}
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true;
+    }
+}
+
+

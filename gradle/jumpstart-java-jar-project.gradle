@@ -6,8 +6,8 @@ apply plugin: 'maven'
 apply plugin: 'maven-publish'
 apply plugin: 'project-report'
 
-apply from: 'https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/gradle/common-tasks.gradle'
 apply from: 'https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/gradle/common-functions.gradle'
+apply from: 'https://raw.githubusercontent.com/dheeraj-mummareddy/gradle-templates/master/gradle/common-tasks.gradle'
 
 repositories {
 	mavenLocal()
